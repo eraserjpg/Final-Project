@@ -5,6 +5,9 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float turnSpeed = 20f;
+    private float playerWalkSpeed = 1f;
+    public float playerSprintSpeed = 2f;
+    public float normalSpeed = 1f;
 
     Animator m_Animator;
     Rigidbody m_Rigidbody;
@@ -46,18 +49,27 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 desiredForward = Vector3.RotateTowards(transform.forward, m_Movement, turnSpeed * Time.deltaTime, 0f);
         m_Rotation = Quaternion.LookRotation(desiredForward);
+
+        UpdateSpeed();
     }
+
+        void UpdateSpeed()
+        {
+            if (Input.GetKey(KeyCode.Space))
+            {
+                playerWalkSpeed = playerSprintSpeed;
+            }
+            else
+            {
+                playerWalkSpeed = normalSpeed;
+            }
+        }
 
     void OnAnimatorMove()
     {
-        m_Rigidbody.MovePosition(m_Rigidbody.position + m_Movement * m_Animator.deltaPosition.magnitude);
+        m_Rigidbody.MovePosition(m_Rigidbody.position + (m_Movement * playerWalkSpeed) * Time.deltaTime);
         m_Rigidbody.MoveRotation(m_Rotation);
     }
 
-
-    void SpeedUp()
-    {
-       
-    }
 }
 

@@ -5089,6 +5089,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2754413077763625081, guid: 8f3c9381b560d024483d1666fd581c51, type: 3}
+      propertyPath: normalSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2754413077763625081, guid: 8f3c9381b560d024483d1666fd581c51, type: 3}
+      propertyPath: playerSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2754413077763625081, guid: 8f3c9381b560d024483d1666fd581c51, type: 3}
+      propertyPath: playerWalkSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2754413077763625081, guid: 8f3c9381b560d024483d1666fd581c51, type: 3}
+      propertyPath: playerSprintSpeed
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 9100439649997334303, guid: 8f3c9381b560d024483d1666fd581c51, type: 3}
       propertyPath: m_Name
       value: JohnLemon
