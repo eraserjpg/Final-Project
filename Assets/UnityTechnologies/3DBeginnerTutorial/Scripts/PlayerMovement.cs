@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -8,7 +10,8 @@ public class PlayerMovement : MonoBehaviour
     private float playerWalkSpeed = 1f;
     public float playerSprintSpeed = 2f;
     public float normalSpeed = 1f;
-
+    
+    public TMP_Text sprintText;
     Animator m_Animator;
     Rigidbody m_Rigidbody;
     AudioSource m_AudioSource;
@@ -20,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
         m_Animator = GetComponent<Animator>();
         m_Rigidbody = GetComponent<Rigidbody>();
         m_AudioSource = GetComponent<AudioSource>();
+        sprintText.text = "Walking.. ";
+        exhausted = false; 
     }
 
     void FixedUpdate()
@@ -51,25 +56,58 @@ public class PlayerMovement : MonoBehaviour
         m_Rotation = Quaternion.LookRotation(desiredForward);
 
         UpdateSpeed();
+        Update();
     }
-
-        void UpdateSpeed()
-        {
-            if (Input.GetKey(KeyCode.Space))
-            {
-                playerWalkSpeed = playerSprintSpeed;
-            }
-            else
-            {
-                playerWalkSpeed = normalSpeed;
-            }
-        }
-
-    void OnAnimatorMove()
+    bool exhausted = false;
+    float sprintTime;
+    float exhaustTime;
+    void UpdateSpeed()
     {
-        m_Rigidbody.MovePosition(m_Rigidbody.position + (m_Movement * playerWalkSpeed) * Time.deltaTime);
-        m_Rigidbody.MoveRotation(m_Rotation);
+        if (!exhausted && Input.GetKey(KeyCode.Space))
+        {
+            sprintTime += Time.deltaTime;
+            playerWalkSpeed = playerSprintSpeed;
+            sprintText.text = "Sprinting! ";
+        }
+        else
+        {
+
+            playerWalkSpeed = normalSpeed;
+            sprintText.text = "Walking.. ";
+        }
     }
 
-}
+
+    void Update()
+    {
+        if (sprintTime >= 4f)
+            exhausted = true;
+        if (exhausted == true)
+            exhaustTime += Time.deltaTime;
+            //sprintText.text = "Exhausted! ";
+        if (exhaustTime >= 5f)
+        {
+            sprintTime = 0f;
+            exhaustTime = 0f;
+            exhausted = false;
+            sprintText.text = "Walking.. ";
+        }
+    }
+        void OnAnimatorMove()
+        {
+            m_Rigidbody.MovePosition(m_Rigidbody.position + (m_Movement * playerWalkSpeed) * Time.deltaTime);
+            m_Rigidbody.MoveRotation(m_Rotation);
+        }
+    }
+
+
+
+
+
+    
+
+
+        
+
+   
 
